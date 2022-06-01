@@ -2,5 +2,4 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Página inicial")
-    # return render(request, '')
+    return render(request, 'barbershop/pages/home.html')
