@@ -30,19 +30,19 @@
                 <label for="telefone" class="form-label">Data de Aniversário</label>
                 <div class="row mb-3">
                     <div class="col">
-                        <input name="daniversario" class="form-control" list="mes" placeholder="Mês do aniversário" aria-label="Default select example" required />
-                        <datalist id="mes">
-                            <option value="Janeiro">Janeiro</option>
-                            <option value="...">...</option>
-                            <option value="Dezembro">Dezembro</option>
-                        </datalist>
+                        <select name="mes" class="form-select" aria-label="Default select example" required  >
+                            <option selected>Selecione o mês</option>
+                            {% for mes in meses %}
+                                <option value="{{ forloop.counter }}">{{ mes }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="col">
                         <input class="form-control" list="datadoaniversario" id="exampleDataList" placeholder="Dia do aniversário" name="maniversario" class="form-select col" aria-label="Default select example" required  />
                         <datalist id="datadoaniversario">
-                            <option value="01">01</option>
-                            <option value="...">...</option>
-                            <option value="31">31</option>
+                            {% for dia in dias_do_mes %}
+                                <option value="{{ dia }}">{{ dia }}</option>
+                            {% endfor %}
                         </datalist>
                     </div>
                 </div>
