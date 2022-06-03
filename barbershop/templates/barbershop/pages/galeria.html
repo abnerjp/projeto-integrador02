@@ -1,0 +1,63 @@
+{% extends 'barbershop/global/base.html' %}
+
+{% load static %}
+
+{% block title %}Galeria | {% endblock title %}
+
+{% block content %}
+  <div class="container-fluid p-3 mb-2 text-white">
+
+    <main>
+      <div class="container px-4 py-5 border-bottom border-warning">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+          <div class="col">
+            <div class="card text-dark bg-warning">
+              <img src="{% static 'barbershop/img/frente-estabelecimento.jpeg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Entrada</h5>
+                <p class="card-text">Local tranquilo e de facil acesso, com vagas no local.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card text-dark bg-warning">
+              <img src="{% static 'barbershop/img/sala-espera.jpeg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Hall de Espera</h5>
+                <p class="card-text">Area social para uma conversa tranquila.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card text-dark bg-warning">
+              <img src="{% static 'barbershop/img/espaco-ele.jpeg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Espaço Ele</h5>
+                <p class="card-text">Onde o homem rejuvenesce suas raizes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="card text-dark bg-warning">
+              <img src="{% static 'barbershop/img/espaco-ela.jpeg' %}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Espaço Ela</h5>
+                <p class="card-text">Local em que a mulher resplandece sua beleza..</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    {% include 'barbershop/partials/footer.html' %}
+
+  </div>
+
+  <script>$("#datepicker").datepicker();</script>
+{% endblock content %}
