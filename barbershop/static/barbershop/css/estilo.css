@@ -1,0 +1,24 @@
+.bd-subnavbar {
+    z-index: 1020;
+    background-color: #1c1c1c;
+}
+
+.bg-img{
+    background-image: url('../img/fundo.jpg') ;
+    height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.logo{
+    margin-top: 5%;
+    background-size: cover;
+}
+
+.linha{
+    background-color:  1px solid #ffc107 !important;
+}
+
+.custom-border-bottom-yellow: {
+   border-bottom: 1px solid #ffc107 !important;
+}
