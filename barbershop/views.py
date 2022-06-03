@@ -10,3 +10,5 @@ def galeria(request):
 def catalogo(request):
     return render(request, 'barbershop/pages/catalogo.html')
 
+def agendamento(request):
+    return render(request, 'barbershop/pages/agendamento.html')

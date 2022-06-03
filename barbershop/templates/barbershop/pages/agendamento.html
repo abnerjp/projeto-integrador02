@@ -1,0 +1,94 @@
+{% extends 'barbershop/global/base.html' %}
+
+{% load static %}
+
+{% block title %}Agendamento | {% endblock title %}
+
+{% block content %}
+<!--  <div class="container-fluid p-3 mb-2 text-white">-->
+ <div class="container px-4 py-5 border-bottom border-warning">
+    <form action="#" method="POST" name="form1">
+
+        <div class="mb-3">
+            <input type="hidden" name="id">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="text" name="telefone" class="form-control" id="telefone" aria-describedby="telefone" placeholder="Telefone" required  >
+            <div id="telefone-info" class="form-text">*Este número receberá uma mensagem por whatsapp 1 hora antes do agendamento para confirmação.</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <input type="text" name="nome" class="form-control" placeholder="Nome" aria-label="First name" required  >
+            </div>
+            <div class="col">
+                <input type="text" name="sobrenome" class="form-control" placeholder="Sobrenome" aria-label="Last name" required  >
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="telefone" class="form-label">Data de Aniversário</label>
+                <div class="row mb-3">
+                    <div class="col">
+                        <input name="daniversario" class="form-control" list="mes" placeholder="Mês do aniversário" aria-label="Default select example" required />
+                        <datalist id="mes">
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="...">...</option>
+                            <option value="Dezembro">Dezembro</option>
+                        </datalist>
+                    </div>
+                    <div class="col">
+                        <input class="form-control" list="datadoaniversario" id="exampleDataList" placeholder="Dia do aniversário" name="maniversario" class="form-select col" aria-label="Default select example" required  />
+                        <datalist id="datadoaniversario">
+                            <option value="01">01</option>
+                            <option value="...">...</option>
+                            <option value="31">31</option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control" list="servicos" placeholder="Selecione o serviço" name="servico" class="form-select" aria-label="Default select example" required  >
+            <datalist id="servicos">Selecione o tipo de serviço
+                <option value="Corte">Corte</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Barba">Barba</option>
+            </datalist>
+        </div>
+
+        <div class="mb-3">
+            <input list="profissional" placeholder="Selecione o profissional" name="profissional" class="form-select" aria-label="Default select example" required  >
+            <datalist id="profissional">Selecione o profissional
+                <option value="Adriano">Adriano</option>
+                <option value="Andreia">Andreia</option>
+                <option value="Roberto">Roberto</option>
+            </datalist>
+        </div>
+
+        <div class="col mb-3">
+            <input name="dia" type="text"  class="form-control" placeholder="Selecione a Data" id="datepicker" required  >
+        </div>
+
+        <div class="mb-3">
+            <select name="hora" class="form-select" aria-label="Default select example" required  >
+                <option selected>Selecione o Horário</option>
+                <option value="10:00">10:00</option>
+                <option value="??:??">...</option>
+                <option value="17:00">17:00</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Agendar" class="btn btn-warning" href="index.php"/>
+
+        <input type="reset" value="Novo" class="btn btn-secondary"/>
+
+    </form>
+
+ </div>
+{% include 'barbershop/partials/footer.html' %}
+
+
+  <script>$("#datepicker").datepicker();</script>
+{% endblock content %}
