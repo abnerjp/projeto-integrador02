@@ -7,3 +7,6 @@ def home(request):
 def galeria(request):
     return render(request, 'barbershop/pages/galeria.html')
 
+def catalogo(request):
+    return render(request, 'barbershop/pages/catalogo.html')
+
