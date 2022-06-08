@@ -7,21 +7,22 @@
 {% block content %}
 <div class="py-5">
     <div class="container px-4 py-5 border-bottom border-warning">
-        <form action="#" method="POST" name="form1">
+        <form action="{% url 'barbershop:confirmacao' %}" method="POST" name="form1">
+            {% csrf_token %}
             <div class="row mb-3">
                 <div class="col">
-                    <label for="nome_cli" class="form-label text-white">Nome</label>
-                    <input type="text" id="nome_cli" name="nome" class="form-control" placeholder="nome completo" aria-label="Last name" required  >
+                    <label for="nome_cliente" class="form-label text-white">Nome</label>
+                    <input type="text" id="nome_cliente" name="nome_cliente" class="form-control" placeholder="nome completo" aria-label="Last name" required  >
                 </div>
                 <div class="col-4">
-                     <label for="celular" class="form-label text-white">Celular</label>
-                     <input type="text" id="celular" name="telefone_celular" class="form-control" placeholder="(18) 98122-7799" aria-label="Telefone celular" required  >
+                     <label for="telefone_celular" class="form-label text-white">Celular</label>
+                     <input type="text" id="telefone_celular" name="telefone_celular" class="form-control" placeholder="(18) 98122-7799" aria-label="Telefone celular" required  >
                  </div>
             </div>
 
             <div class="mb-3">
-                <label for="mensagem" class="form-label text-white">Inf. adicionais</label>
-                <textarea class="form-control" id="mensagem" name="mensagem" required></textarea>
+                <label for="observacao" class="form-label text-white">Inf. adicionais</label>
+                <textarea class="form-control" id="observacao" name="observacao" required></textarea>
             </div>
 
             <input type="submit" value="Agendar" class="btn btn-warning" href="index.php"/>
