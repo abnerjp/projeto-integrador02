@@ -1,0 +1,30 @@
+{% extends 'barbershop/global/base.html' %}
+
+{% load static %}
+
+{% block title %}Agendamento | {% endblock title %}
+
+{% block content %}
+<!--  <div class="container-fluid p-3 mb-2 text-white">-->
+<div class="py-5">
+ <div class="container px-4 py-5 border-bottom border-warning">
+     <div>
+         <div class="pb-2 text-white">
+             <h2>Solicitação enviada</h2>
+             <div><p class="text-warning">Você irá receber uma mensagem de confirmação ref. os dados abaixo:</p></div>
+             <p>Serviço: {{ servico }}</p>
+             <p>Data: {{ data }}</p>
+             <p>Hora agenda: {{ hora_inicio }} - {{ hora_fim }}</p>
+             <p>Cliente: {{ nome_cliente }}</p>
+             <p>Telefone: {{ telefone }}</p>
+             <a href="{% url 'barbershop:home' %}" class="btn btn-warning">Início</a>
+         </div>
+     </div>
+
+ </div>
+</div>
+{% include 'barbershop/partials/footer.html' %}
+
+
+<script>$("#datepicker").datepicker();</script>
+{% endblock content %}

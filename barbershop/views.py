@@ -60,17 +60,21 @@ def confirmar_agendamento(request):
     telefone_celular = request.POST.get('telefone_celular')
     observacao_agendamento = request.POST.get('observacao')
 
+    # envia mensagem - whatsapp
     # sid = send_whatsapp_message(
     #     content_body=observacao_agendamento,
     #     from_number=telefone_celular
     # )
 
-    sid = send_sms_message(
-        content_body=observacao_agendamento,
-        from_number=telefone_celular
-    )
-    print(sid)
-    return redirect('barbershop:consulta_agenda')
+    # envia mensagem - sms
+    # sid = send_sms_message(
+    #     content_body=observacao_agendamento,
+    #     from_number=telefone_celular
+    # )
+    # print(sid)
 
+    return redirect('barbershop:fim_agendamento')
 
+def fim_agendamento(request):
+    return render(request, 'barbershop/pages/fim_agendamento.html')
 

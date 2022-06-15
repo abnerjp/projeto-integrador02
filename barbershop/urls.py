@@ -12,5 +12,5 @@ urlpatterns = [
     path('consulta_agenda/', views.consulta_agenda, name='consulta_agenda'),
     path('agendamento/', views.agendamento, name='agendamento'),
     path('agendamento/confirmacao/', views.confirmar_agendamento, name='confirmacao'),
-
+    path('agendamento/enviado/', views.fim_agendamento, name='fim_agendamento'),
 ]
