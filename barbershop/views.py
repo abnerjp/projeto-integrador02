@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from .utils.twilio_util import send_whatsapp_message, send_sms_message
+from .utils.temporary import get_list_services, get_dict_services
 from django.http import Http404
+from datetime import date
 
 def home(request):
     context = {
@@ -22,23 +25,31 @@ def catalogo(request):
     return render(request, 'barbershop/pages/catalogo.html', context)
 
 
+def inicio_agendamento(request):
+    data_selecionada = date.today().isoformat()
+
+    context = {
+        'consulta_active': 'active',
+        'servicos': get_dict_services(),
+        'data_selecionada': data_selecionada,
+    }
+    return render(request, 'barbershop/pages/inicio_agendamento.html', context)
+
+
+def consulta_agenda(request):
+    if not request.POST:
+        raise Http404()
+
+    print('Consulta agenda:', request.POST)
+
+    return redirect('barbershop:agendamento')
+
+
 def agendamento(request):
     context = {
         'consulta_active': 'active',
     }
     return render(request, 'barbershop/pages/agendamento.html', context)
-
-
-def consulta_agenda(request):
-    meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
-    dias_mes = range(1, 32)
-
-    context = {
-        'consulta_active': 'active',
-        'meses': meses,
-        'dias_do_mes': dias_mes,
-    }
-    return render(request, 'barbershop/pages/consulta_agenda.html', context)
 
 
 def confirmar_agendamento(request):
@@ -49,6 +60,16 @@ def confirmar_agendamento(request):
     telefone_celular = request.POST.get('telefone_celular')
     observacao_agendamento = request.POST.get('observacao')
 
+    # sid = send_whatsapp_message(
+    #     content_body=observacao_agendamento,
+    #     from_number=telefone_celular
+    # )
+
+    sid = send_sms_message(
+        content_body=observacao_agendamento,
+        from_number=telefone_celular
+    )
+    print(sid)
     return redirect('barbershop:consulta_agenda')
 
 
