@@ -8,7 +8,10 @@ def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'projetoIntegrador02.settings')
 
-
+    os.environ.setdefault('TWILIO_ACCOUNT_SID', '')
+    os.environ.setdefault('TWILIO_MESSAGING_SERVICE_SID_FIRST', '')
+    os.environ.setdefault('TWILIO_MESSAGING_SERVICE_SID_SECOND', '')
+    os.environ.setdefault('TWILIO_AUTH_TOKEN', '')
 
     try:
         from django.core.management import execute_from_command_line
