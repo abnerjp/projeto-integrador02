@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .utils.twilio_util import send_whatsapp_message, send_sms_message
-from .utils.temporary import get_list_services, get_dict_services
+from .utils.temporary import get_services
 from django.http import Http404
 from datetime import date
+
+
 
 def home(request):
     context = {
@@ -30,7 +32,7 @@ def inicio_agendamento(request):
 
     context = {
         'consulta_active': 'active',
-        'servicos': get_dict_services(),
+        'servicos': get_services(),
         'data_selecionada': data_selecionada,
     }
     return render(request, 'barbershop/pages/inicio_agendamento.html', context)

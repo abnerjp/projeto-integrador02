@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import time
 # Create your models here.
 
 
@@ -12,7 +13,9 @@ class Cliente(models.Model):
 
 class Servico(models.Model):
     nome = models.CharField(max_length=70)
+    tempo_estimado = models.TimeField(default=time(0, 30))
     descricao = models.CharField(max_length=200)
+    ativo = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nome
