@@ -21,9 +21,14 @@
              </div>
             <div class="col">
                 <label for="nome_servico" class="form-label text-white">Serviço</label>
-                <select id="nome_servico" name="mes" class="form-select" aria-label="Default select example" required  >
-                    {% for id, servico in servicos.items %}
-                        <option value="{{ id }}">{{ servico }}</option>
+                <select  id="nome_servico" name="servico" class="form-select selectpicker" aria-label="Default select example" required
+                        data-show-subtext="true"
+                        data-live-search="true" >
+                    <option selected hidden>- Selecione -</option>
+                    {% for servico in servicos %}
+                        <option value="{{ servico.id }}" data-subtext="Tempo aprox. {{ servico.tempo_estimado }}">
+                            {{ servico.nome }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
