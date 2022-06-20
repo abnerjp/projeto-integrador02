@@ -1,9 +1,10 @@
+import requests
 from django.shortcuts import render, redirect
 from .utils.twilio_util import send_whatsapp_message, send_sms_message
-from .utils.temporary import get_services
+from .utils.temporary import obter_servicos, obter_agenda, obter_horarios, obter_servico_pelo_id
+from .utils.validar_campos import valida_campos, str_to_datetime, str_to_int
 from django.http import Http404
-from datetime import date
-
+from datetime import date, datetime
 
 
 def home(request):
@@ -32,7 +33,7 @@ def inicio_agendamento(request):
 
     context = {
         'consulta_active': 'active',
-        'servicos': get_services(),
+        'lista_servicos': obter_servicos(),
         'data_selecionada': data_selecionada,
     }
     return render(request, 'barbershop/pages/inicio_agendamento.html', context)
@@ -41,10 +42,29 @@ def inicio_agendamento(request):
 def consulta_agenda(request):
     if not request.POST:
         raise Http404()
+    data_informada = request.POST.get('data_agendamento')
+    servico_selecionado = request.POST.get('servico')
 
-    print('Consulta agenda:', request.POST)
+    sao_campos_validos, data_convertida, servico_id = valida_campos(data_informada, servico_selecionado)
+    if sao_campos_validos:
+        servico = obter_servico_pelo_id(servico_id)
 
-    return redirect('barbershop:agendamento')
+    sao_campos_validos = sao_campos_validos and len(servico) > 0
+
+    if not sao_campos_validos:
+        return redirect('barbershop:inicio_agendamento')
+
+    horarios = obter_horarios()
+
+    context = {
+        'consulta_active': 'active',
+        'lista_servicos': obter_servicos(),
+        'data_selecionada': data_convertida.date().isoformat(),
+        'servico_selecionado': servico[0],
+        'horarios': horarios,
+    }
+    return render(request, 'barbershop/pages/inicio_agendamento.html', context)
+    # return redirect('barbershop:agendamento')
 
 
 def agendamento(request):
@@ -77,6 +97,6 @@ def confirmar_agendamento(request):
 
     return redirect('barbershop:fim_agendamento')
 
+
 def fim_agendamento(request):
     return render(request, 'barbershop/pages/fim_agendamento.html')
-

@@ -5,7 +5,7 @@
 {% block title %}Agendamento | {% endblock title %}
 
 {% block content %}
-<!--  <div class="container-fluid p-3 mb-2 text-white">-->
+
 <div class="py-5">
  <div class="container px-4 py-5 border-bottom border-warning">
     <form action="{% url 'barbershop:consulta_agenda' %}" method="POST" name="form1">
@@ -21,12 +21,12 @@
              </div>
             <div class="col">
                 <label for="nome_servico" class="form-label text-white">Serviço</label>
-                <select  id="nome_servico" name="servico" class="form-select selectpicker" aria-label="Default select example" required
-                        data-show-subtext="true"
-                        data-live-search="true" >
-                    <option selected hidden>- Selecione -</option>
-                    {% for servico in servicos %}
-                        <option value="{{ servico.id }}" data-subtext="Tempo aprox. {{ servico.tempo_estimado }}">
+                <select  id="nome_servico" name="servico" class="form-select" required>
+                    {% if servico_selecionado is None %}
+                        <option selected hidden>- Selecione -</option>
+                    {% endif %}
+                    {% for servico in lista_servicos %}
+                        <option value="{{ servico.id }}" {% if servico.id == servico_selecionado.id %} selected="true" {% endif %}>
                             {{ servico.nome }}
                         </option>
                     {% endfor %}
@@ -35,11 +35,33 @@
         </div>
         <input type="submit" value="Consultar" class="btn btn-warning"/>
     </form>
-
  </div>
 </div>
-{% include 'barbershop/partials/footer.html' %}
 
+<!-- resultado da consulta -->
+
+{% if horarios is not None %}
+ <div class="container px-4 py-1 border-bottom border-warning">
+    <h5 class="text-white">Selecione o horário desejado para o dia {{ data_selecionada }}</h5>
+    <form action="{% url 'barbershop:consulta_agenda' %}" method="POST" name="form1" class="mb-5">
+        {% csrf_token %}
+        <div class="col-3 mb-3">
+            <label for="horario_agenda" class="form-label text-white">Horário</label>
+            <select  id="horario_agenda" name="servico" class="form-select" required>
+                <option selected hidden>- Selecione -</option>
+                {% for horario in horarios %}
+                    <option value="{{ horario }}">
+                        {{ horario }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <input type="submit" value="Selecionar" class="btn btn-warning"/>
+    </form>
+ </div>
+{% endif %}
+
+{% include 'barbershop/partials/footer.html' %}
 
 <script>$("#datepicker").datepicker();</script>
 {% endblock content %}

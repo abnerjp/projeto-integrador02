@@ -32,4 +32,4 @@ class Agenda(models.Model):
     servico = models.ForeignKey(Servico, on_delete=models.RESTRICT, null=False)
 
     def __str__(self):
-        return (f'{self.data_agenda} | {self.hora_inicio} - {self.hora_fim} | {self.cliente} | ')
+        return (f'Agenda: {self.data_hora_inicio} - {self.data_hora_fim} | {self.cliente} | Confirmado {self.data_hora_confirmacao}')
