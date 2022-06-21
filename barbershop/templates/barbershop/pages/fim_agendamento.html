@@ -11,12 +11,11 @@
      <div>
          <div class="pb-2 text-white">
              <h2>Solicitação enviada</h2>
-             <div><p class="text-warning">Você irá receber uma mensagem de confirmação ref. os dados abaixo:</p></div>
-             <p>Serviço: {{ servico }}</p>
-             <p>Data: {{ data }}</p>
-             <p>Hora agenda: {{ hora_inicio }} - {{ hora_fim }}</p>
-             <p>Cliente: {{ nome_cliente }}</p>
-             <p>Telefone: {{ telefone }}</p>
+             <p class="text-warning">Que bom, <span class="text-capitalize fw-bold">{{ dados.nome_cliente }}</span>! Quando validarmos sua solicitacão, notificaremos você por SMS.</p>
+             <p>Serviço: {{ dados.nome_servico }}</p>
+             <p>Data: {{ dados.data }}</p>
+             <p>Hora: {{dados.hora_agendada }}</p>
+             <p>Telefone: {{ dados.celular_cliente }}</p>
              <a href="{% url 'barbershop:home' %}" class="btn btn-warning">Início</a>
          </div>
      </div>
