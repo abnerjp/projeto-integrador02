@@ -39,6 +39,9 @@ def obter_servico_pelo_id(service_id):
         Servico.objects.filter(ativo=True, id=service_id).order_by('nome')
     )
 
+def obter_instancia_servico_pelo_id(service_id):
+    return Servico.objects.filter(ativo=True, id=service_id)[0]
+
 def obter_agenda(data_consultada=datetime.today()):
     horarios_agendados = Agenda.objects.filter(
         data_hora_confirmacao__isnull=False,

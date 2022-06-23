@@ -1,10 +1,12 @@
 import requests
 from django.shortcuts import render, redirect
 from .utils.twilio_util import send_whatsapp_message, send_sms_message
-from .utils.temporary import obter_servicos, obter_agenda, obter_horarios, obter_servico_pelo_id
+from .utils.temporary import obter_servicos, obter_agenda, \
+    obter_horarios, obter_servico_pelo_id, obter_instancia_servico_pelo_id
 from .utils.validar_campos import str_to_datetime, str_to_int, str_to_time
 from django.http import Http404
-from datetime import date, datetime
+from datetime import *
+from barbershop.dao.agenda_dao import Agenda_DAO
 
 
 def verify_post_request(request):
@@ -165,6 +167,16 @@ def confirmar_agendamento(request):
 
     del request.session['dados_agendamento']
 
+    nova_agenda = Agenda_DAO(
+        servico=obter_instancia_servico_pelo_id(dados_agendamento['servico_id']),
+        data_agenda=dados_agendamento['data'],
+        nome_cliente=dados_agendamento['nome_cliente'],
+        celular_cliente=dados_agendamento['celular_cliente'],
+        hora_inicio=dados_agendamento['hora_agendada']
+    )
+
+    nova_agenda.salvar()
+
     # envia mensagem - whatsapp
     # sid = send_whatsapp_message(
     #     content_body=observacao_agendamento,
@@ -182,8 +194,6 @@ def confirmar_agendamento(request):
         'consulta_active': 'active',
         'dados': dados_agendamento,
     }
-
-    print(dados_agendamento)
     return render(request, 'barbershop/pages/fim_agendamento.html', context)
 
 
