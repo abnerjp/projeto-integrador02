@@ -1,7 +1,7 @@
 import os
 from twilio.rest import Client
 
-def send_whatsapp_message(content_body, from_number):
+def send_whatsapp_message(content_body):
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
 
@@ -15,7 +15,7 @@ def send_whatsapp_message(content_body, from_number):
     return message.sid
 
 
-def send_sms_message(content_body, from_number='+5518981217469'):
+def send_sms_message(content_body, to_number='+5518981217469'):
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
     # sms_service_sid = os.environ['TWILIO_MESSAGING_SERVICE_SID_FIRST']
@@ -26,6 +26,6 @@ def send_sms_message(content_body, from_number='+5518981217469'):
     message = client.messages.create(
         messaging_service_sid=sms_service_sid,
         body=content_body,
-        to=from_number
+        to=to_number
     )
     return message.sid

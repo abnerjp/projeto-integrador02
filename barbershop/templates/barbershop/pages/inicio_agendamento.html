@@ -73,8 +73,8 @@
             <select  id="horario_agenda" name="horario_selecionado" class="form-select" required>
                 <option selected hidden>- Selecione -</option>
                 {% for horario in horarios %}
-                    <option value="{{ horario }}">
-                        {{ horario }}
+                    <option value="{{ horario.horario }}" {% if not horario.disponivel %} disabled {% endif %}>
+                        {{ horario.horario }}
                     </option>
                 {% endfor %}
             </select>

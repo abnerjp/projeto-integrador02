@@ -1,9 +1,10 @@
 import requests
 from django.shortcuts import render, redirect
 from .utils.twilio_util import send_whatsapp_message, send_sms_message
-from .utils.temporary import obter_servicos, obter_agenda, \
-    obter_horarios, obter_servico_pelo_id, obter_instancia_servico_pelo_id
-from .utils.validar_campos import str_to_datetime, str_to_int, str_to_time
+from .utils.temporary import obter_servicos, obter_agenda, obter_horarios_disponiveis, \
+    obter_servico_pelo_id, obter_instancia_servico_pelo_id
+from .utils.validacoes import str_to_datetime, str_to_int, str_to_time, valida_celular
+from .utils.utils import formatar_celular
 from django.http import Http404
 from datetime import *
 from barbershop.dao.agenda_dao import Agenda_DAO
@@ -76,7 +77,8 @@ def consulta_agenda(request):
         request.session['erros'] = erros
         return redirect('barbershop:inicio_agendamento')
 
-    horarios = obter_horarios()
+    # horarios = obter_horarios()
+    horarios  = obter_horarios_disponiveis(data_convertida.date(), servicos[0]['tempo_estimado'])
 
     request.session['dados_agendamento'] = {
         'data': data_convertida.date().isoformat(),
@@ -155,40 +157,41 @@ def confirmar_agendamento(request):
     except:
         erros.append("O nome é obrigatório")
 
-    # TODO :: validar celular
+    # validar celular
+    telefone_celular, msg_validacao_celular = valida_celular(telefone_celular)
+    if msg_validacao_celular is not None:
+        erros.append(msg_validacao_celular)
 
     if len(erros) > 0:
         request.session['erros'] = erros
         return redirect('barbershop:agendamento')
 
     dados_agendamento['nome_cliente'] = nome_cliente
-    dados_agendamento['celular_cliente'] = telefone_celular
+    dados_agendamento['celular_cliente'] = formatar_celular(telefone_celular)
     dados_agendamento['observacao_cliente'] = observacao_agendamento
 
     del request.session['dados_agendamento']
+
+    telefone_celular = "+55" + telefone_celular
 
     nova_agenda = Agenda_DAO(
         servico=obter_instancia_servico_pelo_id(dados_agendamento['servico_id']),
         data_agenda=dados_agendamento['data'],
         nome_cliente=dados_agendamento['nome_cliente'],
-        celular_cliente=dados_agendamento['celular_cliente'],
+        celular_cliente=telefone_celular,
         hora_inicio=dados_agendamento['hora_agendada']
     )
 
     nova_agenda.salvar()
 
-    # envia mensagem - whatsapp
-    # sid = send_whatsapp_message(
-    #     content_body=observacao_agendamento,
-    #     from_number=telefone_celular
-    # )
+    # envia mensagem layout para que a próxima mensagem possa ser enviada - whatsapp
+    send_whatsapp_message("Your UUID report code is " + nova_agenda.codigo_uuid)
+    send_whatsapp_message(observacao_agendamento)
+
+
 
     # envia mensagem - sms
-    # sid = send_sms_message(
-    #     content_body=observacao_agendamento,
-    #     from_number=telefone_celular
-    # )
-    # print(sid)
+    # send_sms_message(observacao_agendamento, telefone_celular)
 
     context = {
         'consulta_active': 'active',

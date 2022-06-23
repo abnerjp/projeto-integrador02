@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import *
-
+import uuid
+import re
 
 # Create your models here.
 
@@ -22,6 +23,7 @@ class Agenda(models.Model):
     data_hora_fim = models.DateTimeField()
     data_hora_confirmacao = models.DateTimeField(null=True)
     nome_cliente = models.CharField(max_length=70, null=False)
+    codigo_uuid = models.CharField(max_length=32, null=False, default=re.sub(r'-', '', str(uuid.uuid4())))
     celular_cliente = models.CharField(max_length=14, null=False)
     servico = models.ForeignKey(Servico, on_delete=models.RESTRICT, null=False)
 

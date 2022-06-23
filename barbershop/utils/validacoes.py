@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, time
 
 
@@ -26,3 +27,15 @@ def str_to_time(value):
     except:
         ...
     return valor_convertido
+
+def valida_celular(value):
+    erro = None
+    valor_retorno = value
+
+    somente_numeros = re.sub(r'\D', '', value)
+    if len(somente_numeros) < 11:
+        erro = "O número de celular informado não é válido."
+    else:
+        valor_retorno = somente_numeros[-11:]
+
+    return valor_retorno, erro

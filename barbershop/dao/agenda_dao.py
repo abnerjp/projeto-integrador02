@@ -1,6 +1,7 @@
 from barbershop.models import Agenda
 from datetime import *
-
+import uuid
+import re
 
 class Agenda_DAO:
 
@@ -10,6 +11,7 @@ class Agenda_DAO:
         self.celular_cliente = celular_cliente
         self.data_hora_inicio = self.__gerar_datetime(data_agenda, hora_inicio)
         self.data_hora_fim = self.__calcular_hora_fim()
+        self.codigo_uuid = self.__make_uuid()
 
     def salvar(self):
         Agenda(
@@ -18,6 +20,7 @@ class Agenda_DAO:
             nome_cliente=self.nome_cliente,
             celular_cliente=self.celular_cliente,
             servico=self.servico,
+            codigo_uuid=self.codigo_uuid,
         ).save()
 
     def __calcular_hora_fim(self):
@@ -34,3 +37,6 @@ class Agenda_DAO:
             date.fromisoformat(data_agenda),
             time.fromisoformat(hora_inicio)
         )
+
+    def __make_uuid(self):
+        return re.sub(r'-', '', str(uuid.uuid4()))
