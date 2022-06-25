@@ -79,8 +79,7 @@ def consulta_agenda(request):
         request.session['erros'] = erros
         return redirect('barbershop:inicio_agendamento')
 
-    # horarios = obter_horarios()
-    horarios = obter_horarios_disponiveis(data_convertida.date(), servicos[0]['tempo_estimado'])
+    horarios = obter_horarios_disponiveis()
 
     request.session['dados_agendamento'] = {
         'data': data_convertida.date().isoformat(),

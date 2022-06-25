@@ -46,7 +46,8 @@ def obter_agenda_por_dia(nao_confirmado=False, data_consultada=datetime.today())
     ).order_by('data_hora_inicio')
     return horarios_agendados
 
-
+# método foi desenvolvido mas nao esta sendo utilizado
+# obtem as agendas confirmadas do dia informado, e verifica se o horario analisado esta disponivel
 def horario_disponivel(data, horario_analisado_inicio, tempo_servico_selecionado=time(0, 30, 0)):
     disponivel = True
 
@@ -85,7 +86,7 @@ def horario_disponivel(data, horario_analisado_inicio, tempo_servico_selecionado
     return disponivel
 
 
-def obter_horarios_disponiveis(data=date.today(), tempo_servico_selecionado=time(0, 30, 0)):
+def obter_horarios_disponiveis():
     lista_horarios = []
     for i in range(8, 18):
         if i != 12:

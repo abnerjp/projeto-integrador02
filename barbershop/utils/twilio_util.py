@@ -22,8 +22,7 @@ def send_whatsapp_message(content_body):
 def send_sms_message(content_body, to_number=os.environ.get('RECEIVER_SMS_PHONE')):
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
-    # sms_service_sid = os.environ['TWILIO_MESSAGING_SERVICE_SID_FIRST']
-    sms_service_sid = os.environ['TWILIO_MESSAGING_SERVICE_SID_SECOND']
+    sms_service_sid = os.environ['TWILIO_MESSAGING_SERVICE_SID']
 
     client = Client(account_sid, auth_token)
 

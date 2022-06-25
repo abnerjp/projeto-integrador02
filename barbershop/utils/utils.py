@@ -1,4 +1,3 @@
-import re
 
 def formatar_celular(value):
     value = value[-11:]
