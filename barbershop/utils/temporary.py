@@ -33,20 +33,18 @@ def obter_instancia_servico_pelo_id(service_id):
     return Servico.objects.filter(ativo=True, id=service_id)[0]
 
 
-def obter_agenda(data_consultada=datetime.today()):
+def obter_toda_agenda_por_dia(data_consultada=datetime.today()):
     horarios_agendados = Agenda.objects.filter(
-        data_hora_confirmacao__isnull=False,
         data_hora_inicio__date=data_consultada
     ).order_by('data_hora_inicio')
+    return horarios_agendados
 
-    lista_horarios_agendados = []
-    for horario_agendado in horarios_agendados:
-        lista_horarios_agendados.append({
-            'data_hora_inicio': horario_agendado.data_hora_inicio,
-            'data_hora_fim': horario_agendado.data_hora_fim,
-        })
-
-    return lista_horarios_agendados
+def obter_agenda_por_dia(nao_confirmado=False, data_consultada=datetime.today()):
+    horarios_agendados = Agenda.objects.filter(
+        data_hora_confirmacao__isnull=nao_confirmado,
+        data_hora_inicio__date=data_consultada
+    ).order_by('data_hora_inicio')
+    return horarios_agendados
 
 
 def horario_disponivel(data, horario_analisado_inicio, tempo_servico_selecionado=time(0, 30, 0)):
@@ -59,7 +57,7 @@ def horario_disponivel(data, horario_analisado_inicio, tempo_servico_selecionado
     )
 
     # busca todos os horarios já confirmados do dia
-    horarios_confirmado = obter_agenda(data)
+    horarios_confirmado = obter_agenda_por_dia(nao_confirmado=False, data_consultada=data)
 
     analisado_inicio = datetime.combine(data, horario_analisado_inicio)
     analisado_fim = analisado_inicio + delta_tempo_servico
@@ -107,3 +105,13 @@ def obter_horarios_disponiveis(data=date.today(), tempo_servico_selecionado=time
             'disponivel': disponivel
         })
     return lista_horarios
+
+def obter_agenda_por_uuid(codigo_uuid_procurado):
+    horario = None
+    try:
+        horario = Agenda.objects.get(
+            codigo_uuid=codigo_uuid_procurado
+        )
+    except:
+        ...
+    return horario

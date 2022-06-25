@@ -5,10 +5,11 @@ import re
 
 class Agenda_DAO:
 
-    def __init__(self, servico, nome_cliente, celular_cliente, data_agenda, hora_inicio):
+    def __init__(self, servico, nome_cliente, observacao_cliente, celular_cliente, data_agenda, hora_inicio):
         self.servico = servico
         self.nome_cliente = nome_cliente
         self.celular_cliente = celular_cliente
+        self.observacao_cliente=observacao_cliente
         self.data_hora_inicio = self.__gerar_datetime(data_agenda, hora_inicio)
         self.data_hora_fim = self.__calcular_hora_fim()
         self.codigo_uuid = self.__make_uuid()
@@ -19,6 +20,7 @@ class Agenda_DAO:
             data_hora_fim=self.data_hora_fim,
             nome_cliente=self.nome_cliente,
             celular_cliente=self.celular_cliente,
+            observacao_cliente=self.observacao_cliente,
             servico=self.servico,
             codigo_uuid=self.codigo_uuid,
         ).save()
@@ -39,4 +41,4 @@ class Agenda_DAO:
         )
 
     def __make_uuid(self):
-        return re.sub(r'-', '', str(uuid.uuid4()))
+        return str(uuid.uuid4())

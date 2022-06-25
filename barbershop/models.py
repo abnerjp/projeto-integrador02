@@ -23,8 +23,9 @@ class Agenda(models.Model):
     data_hora_fim = models.DateTimeField()
     data_hora_confirmacao = models.DateTimeField(null=True)
     nome_cliente = models.CharField(max_length=70, null=False)
-    codigo_uuid = models.CharField(max_length=32, null=False, default=re.sub(r'-', '', str(uuid.uuid4())))
+    codigo_uuid = models.CharField(max_length=36, null=False, default=str(uuid.uuid4()))
     celular_cliente = models.CharField(max_length=14, null=False)
+    observacao_cliente = models.CharField(max_length=150, null=True)
     servico = models.ForeignKey(Servico, on_delete=models.RESTRICT, null=False)
 
 
