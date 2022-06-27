@@ -5,34 +5,60 @@ Clonar o repositório:
 git clone https://github.com/abnerjp/projeto-integrador02.git
 ```
 
+---
 
-Atualizar pip
-```
-python -m pip install --upgrade pip
-```
+## Configurar projeto localmente
+### 1. Criar ambiente virtual para o projeto
+- #### IDE Pycharm
+    ...
+### 2. Instalar dependências
+- #### Atualizar pip
+    ``` 
+    python -m pip install --upgrade pip 
+    ```
 
 
-Instalar Django ao projeto
-```
-pip install django
-```
+- #### Instalar Django ao projeto
+    ```
+    pip install django
+    ```
 
-Instalar Twilio ao projeto
-```
-pip install twilio
-```
+- #### Instalar Twilio ao projeto
+    ```
+    pip install twilio
+    ```
 
-Executar as migrações
-```
-python .\manage.py migrate
-```
+### 3. Executar as migrações
+- #### Windows
+    ```
+    python .\manage.py migrate
+    ```
+- #### Linux
+  ```
+  python manage.py migrate
+  ```
 
-Para acessar a seção de administração, é necessário ter um usuário criado
-```
-python .\manage.py createsuperuser
-```
+---
 
-Executar a aplicação
-```
-python .\manage.py runserver
-```
+## Seção Admin
+#### Para acessar a seção de administração, é necessário ter um usuário criado
+- #### Windows
+    ```
+    python .\manage.py createsuperuser
+    ```
+- #### Linux
+    ```
+    python manage.py createsuperuser
+    ```
+
+---
+
+## Executar a aplicação
+- #### Windows
+    ```
+    python .\manage.py runserver
+    ```
+- #### Linux
+    ```
+    python manage.py runserver
+    ```
