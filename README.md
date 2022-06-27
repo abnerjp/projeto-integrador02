@@ -10,7 +10,7 @@
 
 ### Configurar projeto
 #### 1. Criar ambiente virtual para o projeto
-- ###### IDE Pycharm
+- ###### IDE PyCharm
     ...
 #### 2. Instalar dependências
 - ###### Atualizar pip
