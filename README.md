@@ -8,7 +8,7 @@
 
 ---
 
-### Configurar projeto localmente
+### Configurar projeto
 #### 1. Criar ambiente virtual para o projeto
 - ###### IDE Pycharm
     ...
