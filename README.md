@@ -41,7 +41,7 @@ git clone https://github.com/abnerjp/projeto-integrador02.git
 ---
 
 ## Seção Admin
-#### Para acessar a seção de administração, é necessário ter um usuário criado
+#### Para acessar a seção de administração do Django, é necessário ter um usuário criado
 - #### Windows
     ```
     python .\manage.py createsuperuser
