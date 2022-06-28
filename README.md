@@ -39,7 +39,7 @@
     ```
     python .\manage.py migrate
     ```
-- ###### Linux
+- ###### GNU/Linux
   ```
   python manage.py migrate
   ```
@@ -52,7 +52,7 @@
     ```
     python .\manage.py createsuperuser
     ```
-- ###### Linux
+- ###### GNU/Linux
     ```
     python manage.py createsuperuser
     ```
@@ -64,7 +64,7 @@
     ```
     python .\manage.py runserver
     ```
-- ###### Linux
+- ###### GNU/Linux
     ```
     python manage.py runserver
     ```
