@@ -19,6 +19,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
+# numero do twilio que ira enviar as mensagens
+os.environ['BUSINESS_CELL_PHONE_WHATSAPP_TWILIO'] = '+14155238886'
+
+# numero do celular da barbearia que recebera as mensagens whatsapp
+os.environ['RECEIVER_WHATSAPP_PHONE'] = '+5518981217469'
+# SID do para whatsapp
+os.environ['TWILIO_ACCOUNT_SID'] = 'AC3d750ff48de7de048edb595c76759d31'
+
+# numero do celular da barbearia que recebera as mensagens sms
+os.environ['RECEIVER_SMS_PHONE'] = '+5518981217469'
+# SID para sms
+os.environ['TWILIO_MESSAGING_SERVICE_SID'] = 'MGbd7e5cee73304b53bc746e3d9110b72b'
+
+# deve ser obtido um novo... na conta twilio
+os.environ['TWILIO_AUTH_TOKEN'] = ''
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-1z_-w^lzs@1rw=2--9ivni@da@61*9pbl#tsf=5=3p8ct9p1=o'
 
