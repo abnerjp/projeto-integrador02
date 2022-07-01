@@ -28,7 +28,7 @@ os.environ['RECEIVER_WHATSAPP_PHONE'] = '+5518981217469'
 os.environ['TWILIO_ACCOUNT_SID'] = 'AC3d750ff48de7de048edb595c76759d31'
 
 # numero do celular da barbearia que recebera as mensagens sms
-os.environ['RECEIVER_SMS_PHONE'] = '+5518981217469'
+os.environ['RECEIVER_SMS_PHONE'] = '+5511979739033'
 # SID para sms
 os.environ['TWILIO_MESSAGING_SERVICE_SID'] = 'MGbd7e5cee73304b53bc746e3d9110b72b'
 
