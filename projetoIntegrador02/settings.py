@@ -33,7 +33,7 @@ os.environ['RECEIVER_SMS_PHONE'] = '+5511979739033'
 os.environ['TWILIO_MESSAGING_SERVICE_SID'] = 'MGbd7e5cee73304b53bc746e3d9110b72b'
 
 # deve ser obtido um novo... na conta twilio
-os.environ['TWILIO_AUTH_TOKEN'] = ''
+# os.environ['TWILIO_AUTH_TOKEN'] = ''
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
