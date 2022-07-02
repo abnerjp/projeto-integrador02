@@ -194,7 +194,7 @@ def confirmar_agendamento(request):
     send_whatsapp_message(wpp_msg)
 
     sms_msg = "-= Yeshua =-\nNova solicitação\n\n" + url_confirmacao
-    send_sms_message(sms_msg, telefone_celular)
+    send_sms_message(sms_msg)
 
     context = {
         'consulta_active': 'active',
@@ -209,6 +209,7 @@ def fim_agendamento(request):
         del request.session['dados_agendamento']
 
     return render(request, 'barbershop/pages/fim_agendamento.html')
+
 
 def ver_agenda(request):
     data_agenda = datetime.today()
