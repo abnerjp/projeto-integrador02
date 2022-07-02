@@ -210,6 +210,37 @@ def fim_agendamento(request):
 
     return render(request, 'barbershop/pages/fim_agendamento.html')
 
+def ver_agenda(request):
+    data_agenda = datetime.today()
+    if request.POST:
+        data_convertida = str_to_datetime(request.POST.get('data_agendamento'))
+        if data_convertida is not None:
+            data_agenda = data_convertida
+
+    horarios_do_dia = []
+    horarios_cadastrados = obter_toda_agenda_por_dia(data_agenda)
+    for horario_agendado in horarios_cadastrados:
+        horario_confirmado = horario_agendado.data_hora_confirmacao is not None
+        sendo_analisado = False
+        url_confirmacao = request.build_absolute_uri(
+            resolve_url('barbershop:confirmacao_registro', horario_agendado.codigo_uuid)
+        )
+        horarios_do_dia.append({
+            'nome_servico': horario_agendado.servico.nome,
+            'data_hora_inicio': horario_agendado.data_hora_inicio,
+            'data_hora_fim': horario_agendado.data_hora_fim,
+            'sendo_analisado': sendo_analisado,
+            'horario_ja_confirmado': horario_agendado.data_hora_confirmacao is not None,
+            'link_aprovacao': url_confirmacao,
+        })
+
+    context = {
+        'data_agenda': data_agenda,
+        'agenda_do_dia': horarios_do_dia,
+    }
+
+    return render(request, 'barbershop/pages/validar_agenda.html', context)
+
 
 def validar_agenda(request, codigo_uuid):
     horario_analisado = obter_agenda_por_uuid(str(codigo_uuid))
@@ -233,11 +264,9 @@ def validar_agenda(request, codigo_uuid):
     for horario_agendado in horarios_cadastrados:
         horario_confirmado = horario_agendado.data_hora_confirmacao is not None
         sendo_analisado = horario_agendado.codigo_uuid == horario_analisado.codigo_uuid
-        url_confirmacao = None
-        if not horario_confirmado:
-            url_confirmacao = request.build_absolute_uri(
-                resolve_url('barbershop:confirmacao_registro', horario_agendado.codigo_uuid)
-            )
+        url_confirmacao = request.build_absolute_uri(
+            resolve_url('barbershop:confirmacao_registro', horario_agendado.codigo_uuid)
+        )
         horarios_do_dia.append({
             'nome_servico': horario_agendado.servico.nome,
             'data_hora_inicio': horario_agendado.data_hora_inicio,
@@ -249,6 +278,7 @@ def validar_agenda(request, codigo_uuid):
 
     context = {
         'dados': dados,
+        'data_agenda': horario_analisado.data_hora_inicio,
         'agenda_do_dia': horarios_do_dia,
     }
 
@@ -266,11 +296,14 @@ def confirmacao_agenda_pelo_dono(request):
     horario_analisado.data_hora_confirmacao = datetime.today()
     horario_analisado.save()
 
-    sms_msg = "-= Yeshua =-\n" \
+    msg_to_send = "-= Yeshua =-\n" \
               "Seu horário foi confirmado\n" \
               "Serviço: " + horario_analisado.servico.nome + "\n" \
               "Data: " + horario_analisado.data_hora_inicio.strftime('%d/%m/%Y, %Hh%M %p')
     # envia mensagem - sms
-    send_sms_message(sms_msg, horario_analisado.celular_cliente)
+    send_sms_message(msg_to_send, horario_analisado.celular_cliente)
+
+    # envia mensagem - whats
+    send_whatsapp_message(msg_to_send, horario_analisado.celular_cliente)
 
     return redirect('barbershop:confirmacao_registro', codigo_uuid)

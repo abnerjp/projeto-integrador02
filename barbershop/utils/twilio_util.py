@@ -1,11 +1,10 @@
 import os
 from twilio.rest import Client
 
-def send_whatsapp_message(content_body):
+def send_whatsapp_message(content_body, receiver_cell_phone=os.environ.get('RECEIVER_WHATSAPP_PHONE')):
     account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
     auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
     sender_cell_phone = os.environ.get('BUSINESS_CELL_PHONE_WHATSAPP_TWILIO')
-    receiver_cell_phone = os.environ.get('RECEIVER_WHATSAPP_PHONE')
     client = Client(account_sid, auth_token)
 
     try:

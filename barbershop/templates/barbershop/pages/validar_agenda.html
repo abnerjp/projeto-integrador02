@@ -5,37 +5,55 @@
 
 <div class="py-5">
     <div class="container px-4 pt-5 pb-3">
-        <div>
             <div class="pb-2 text-white">
-                {% if dados.horario_ja_confirmado %}
-                    <h2 class="mb-3">Horário - <span class="text-success">Confirmado</span></h2>
+                {% if dados %}
+                    {% if dados.horario_ja_confirmado %}
+                        <h2 class="mb-3">Horário - <span class="text-success">Confirmado</span></h2>
+                    {% else %}
+                        <h2 class="mb-3">Aprovação de horário</h2>
+                    {% endif %}
+                    <p><span class="text-warning">Solicitante:</span> <span class="text-capitalize">{{ dados.nome_cliente }}</span></p>
+                    <p><span class="text-warning">Serviço:</span> {{ dados.nome_servico }}</p>
+                    <p><span class="text-warning">Data:</span> {{ dados.data_hora_inicio|date:"d M Y" }} <span class="text-warning">às</span> {{ dados.data_hora_inicio|time:"H\hi" }}</p>
+                    <p><span class="text-warning">Previsão término:</span> {{ dados.data_hora_fim|time:"H\hi" }}</p>
+                    <p><span class="text-warning">Telefone:</span> {{ dados.telefone_celular }}</p>
+                    <p><span class="text-warning">Observação do cliente:</span> {{ dados.observacao_cliente }}</p>
+                    {% if dados.horario_ja_confirmado %}
+                        <a href="{% url 'barbershop:home' %}" class="btn btn-warning">Página inicial</a>
+                    {% else %}
+                        <form action="{% url 'barbershop:confirmacao_final_agenda' %}" method="POST" name="form1">
+                            {% csrf_token %}
+                            <input type="text" id="codigo_uuid" name="codigo_uuid" required  value="{{ dados.codigo_uuid }}" hidden >
+                            <input type="submit" value="Aprovar" class="btn btn-warning"/>
+                        </form>
+                    {% endif %}
                 {% else %}
-                    <h2 class="mb-3">Aprovação de horário</h2>
-                {% endif %}
-                <p><span class="text-warning">Solicitante:</span> <span class="text-capitalize">{{ dados.nome_cliente }}</span></p>
-                <p><span class="text-warning">Serviço:</span> {{ dados.nome_servico }}</p>
-                <p><span class="text-warning">Data:</span> {{ dados.data_hora_inicio|date:"d M Y" }} <span class="text-warning">às</span> {{ dados.data_hora_inicio|time:"H\hi" }}</p>
-                <p><span class="text-warning">Previsão término:</span> {{ dados.data_hora_fim|time:"H\hi" }}</p>
-                <p><span class="text-warning">Telefone:</span> {{ dados.telefone_celular }}</p>
-                <p><span class="text-warning">Observação do cliente:</span> {{ dados.observacao_cliente }}</p>
-                {% if dados.horario_ja_confirmado %}
-                    <a href="{% url 'barbershop:home' %}" class="btn btn-warning">Página inicial</a>
-                {% else %}
-                    <form action="{% url 'barbershop:confirmacao_final_agenda' %}" method="POST" name="form1">
+                    <form action="{% url 'barbershop:ver_registros_agenda' %}" method="POST" name="form1">
                         {% csrf_token %}
-                        <input type="text" id="codigo_uuid" name="codigo_uuid" required  value="{{ dados.codigo_uuid }}" hidden >
-                        <input type="submit" value="Aprovar" class="btn btn-warning"/>
+                        <div class="row mb-3">
+                            <div class="col-3">
+                                 <label for="data_agendamento" class="form-label text-white">Data</label>
+                                 <input type="date" id="data_agendamento" name="data_agendamento" class="form-control"
+                                        value="{{ data_agenda|date:"Y-m-d" }}"
+                                        min="2022-01-01"
+                                        max="2050-12-31"
+                                        aria-label="Data desejada" required>
+                             </div>
+                            <div class="col d-flex">
+                                <input type="submit" value="Consultar" class="btn btn-warning align-self-end"/>
+                            </div>
+                        </div>
+
                     </form>
                 {% endif %}
             </div>
-        </div>
     </div>
     <div class="container px-4 py-3 border-bottom border-warning">
         <div>
             <div class="pb-2 text-white">
                 <div class="table-responsive">
-                    <table class="table table-dark table-hover table-borderless caption-top text-white">
-                        <caption>Agenda de <span class="text-warning">{{ dados.data_hora_inicio|date:"d M Y" }}</span></caption>
+                    <table class="table table-dark table-hover table-borderless caption-top text-white table-sm">
+                        <caption>Agenda de <span class="text-warning">{{ data_agenda|date:"d M Y" }}</span> -  <a href="{% url 'barbershop:ver_registros_agenda' %}" class="text-decoration-none btn btn-sm btn-outline-success">Ver data atual</a></caption>
                         <thead class="table-secondary">
                         <tr>
                             <th scope="col"></th>
@@ -56,9 +74,9 @@
                                 {% if horario.sendo_analisado  %}
                                   <span>Analisando agora</span>
                                 {% elif not horario.horario_ja_confirmado %}
-                                  <span class="text-warning">Pendente</span>
+                                  <a href="{{ horario.link_aprovacao }}" class="text-warning">Pendente</a>
                                 {% else %}
-                                   <span class="text-success">Aprovado</span>
+                                   <a href="{{ horario.link_aprovacao }}" class="text-success">Aprovado</a>
                                 {% endif %}
                                 </td>
                             </tr>
